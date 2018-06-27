@@ -2,21 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using System.Linq;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 
-namespace ReceiptPhotos
+using Xamarin.Forms;
+
+namespace ReceiptPhotos.Pages
 {
-    public partial class MainPage : ContentPage
+    public class Main : ContentPage
     {
-        public MainPage()
+        public Main()
         {
-            InitializeComponent();
-            ///////////////////////////////
             ScrollView scroll = new ScrollView();
             var grid = new Grid();
             for (int i = 0; i < 12; i++)
@@ -84,30 +78,7 @@ namespace ReceiptPhotos
             {
                 var user = username.Text;
                 var pass = password.Text;
-                CheckLogin(user, pass);
-            };
-        }
-        public async void CheckLogin(string username, string password)
-        {
-            var client = new HttpClient();
-            var stringContent = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("username", username),
-                new KeyValuePair<string, string>("password", password),
-            });
-            var URI = "https://eplserver.net/erp/AccountingReceipts/AccountingReceipts.php";
-            using (var response = await client.PostAsync(URI, stringContent))
-            {
-                string responseData = await response.Content.ReadAsStringAsync();
-                //await DisplayAlert("Wrong Credentials", responseData, "Ok");
-                if (responseData == "success")
-                {
-                    await Navigation.PushModalAsync(new Pages.Main());
-                }
-                else
-                {
-                    await DisplayAlert("Wrong Credentials", "Check your password or username", "Ok");
-                }
+                //CheckLogin(user, pass);
             };
         }
     }
