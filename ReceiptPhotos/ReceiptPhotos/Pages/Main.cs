@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Plugin.Media;
 
 using Xamarin.Forms;
 
@@ -53,6 +54,13 @@ namespace ReceiptPhotos.Pages
                 Text = "\nLOGIN\n",
                 Margin = new Thickness(0, 7, 0, 0)
             };
+            var image = new Image
+            {
+                //Source = "EPLogo.png",
+                HeightRequest = 120,
+                WidthRequest = 50,
+                Aspect = Aspect.AspectFit
+            };
             var Contenti = new StackLayout()
             {
                 Padding = 40,
@@ -71,14 +79,15 @@ namespace ReceiptPhotos.Pages
                     }
                 }
             };
-            grid.Children.Add(Contenti, 2, 1);
-            Grid.SetColumnSpan(Contenti, 12);
-            Grid.SetRowSpan(Contenti, 10);
-            Boton.Clicked += (object sender, EventArgs e) =>
+            grid.Children.Add(Contenti, 0, 0);
+            Grid.SetColumnSpan(Contenti, 16);
+            Grid.SetRowSpan(Contenti, 12);
+            Boton.Clicked += async (sender, args) =>
             {
-                var user = username.Text;
-                var pass = password.Text;
-                //CheckLogin(user, pass);
+                var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+
+                if (photo != null)
+                    image.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
             };
         }
     }

@@ -13,7 +13,7 @@ namespace ReceiptPhotos
         {
             InitializeComponent();
 
-            MainPage = new ReceiptPhotos.MainPage();
+            MainPage = new ReceiptPhotos.Pages.Main();
         }
 
         protected override void OnStart()
